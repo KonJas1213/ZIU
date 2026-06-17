@@ -4,7 +4,7 @@ import { Step1 } from "./Step1";
 import { Step2 } from "./Step2";
 import { Step3 } from "./Step3";
 import { RegistrationPayload, Step1Data, Step2Data } from "./schemas";
-import "./lab7.css";
+import "./registration.css";
 
 type FormState = {
   step1?: Step1Data;

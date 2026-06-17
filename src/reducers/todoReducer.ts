@@ -1,29 +1,22 @@
-import { Todo, TodoAction } from '../types/todo.types';
+import { Todo, TodoAction } from "../types/todo.types";
 
 export function todoReducer(state: Todo[], action: TodoAction): Todo[] {
   switch (action.type) {
-    case 'ADD':
-      return [
-        {
-          id: crypto.randomUUID(),
-          title: action.payload,
-          completed: false,
-          createdAt: new Date(),
-        },
-        ...state,
-      ];
+    case "SET_TODOS":
+      return action.payload;
 
-    case 'TOGGLE':
-      return state.map(t =>
-        t.id === action.payload ? { ...t, completed: !t.completed } : t
-      );
+    case "ADD":
+      return [action.payload, ...state];
 
-    case 'DELETE':
-      return state.filter(t => t.id !== action.payload);
+    case "TOGGLE":
+      return state.map((todo) => (todo.id === action.payload.id ? action.payload : todo));
 
-    case 'EDIT':
-      return state.map(t =>
-        t.id === action.payload.id ? { ...t, title: action.payload.title } : t
+    case "DELETE":
+      return state.filter((todo) => todo.id !== action.payload);
+
+    case "EDIT":
+      return state.map((todo) =>
+        todo.id === action.payload.id ? { ...todo, title: action.payload.title } : todo,
       );
 
     default:

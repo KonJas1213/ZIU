@@ -1,5 +1,6 @@
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import TaskIcon from "@mui/icons-material/Task";
 import {
   Avatar,
@@ -13,32 +14,23 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { AppView } from "../../types/app.types";
+import { NavLink } from "react-router-dom";
 
 export const DRAWER_WIDTH = 240;
 
-const navItems: { label: string; view: AppView; icon: typeof DashboardIcon }[] = [
-  { label: "Dashboard", view: "dashboard", icon: DashboardIcon },
-  { label: "Zadania", view: "dashboard", icon: TaskIcon },
-  { label: "Rejestracja", view: "register", icon: HowToRegIcon },
+const navItems = [
+  { label: "Dashboard", path: "/", icon: DashboardIcon, end: true },
+  { label: "Zadania", path: "/zadania", icon: TaskIcon, end: false },
+  { label: "Rejestracja", path: "/rejestracja", icon: HowToRegIcon, end: false },
+  { label: "O projekcie", path: "/o-projekcie", icon: InfoOutlinedIcon, end: false },
 ];
 
 interface SidebarProps {
   mobileOpen: boolean;
-  activeView: AppView;
-  onNavigate: (view: AppView) => void;
   onClose: () => void;
 }
 
-function DrawerContent({
-  activeView,
-  onNavigate,
-  onClose,
-}: {
-  activeView: AppView;
-  onNavigate: (view: AppView) => void;
-  onClose?: () => void;
-}) {
+function DrawerContent({ onClose }: { onClose?: () => void }) {
   return (
     <>
       <Toolbar>
@@ -50,20 +42,17 @@ function DrawerContent({
       <List component="nav" aria-label="Główna nawigacja">
         {navItems.map((item) => {
           const Icon = item.icon;
-          const selected =
-            item.label === "Rejestracja"
-              ? activeView === "register"
-              : activeView === "dashboard" && item.label === "Dashboard"
-                ? true
-                : activeView === "dashboard" && item.label === "Zadania";
-
           return (
             <ListItemButton
-              key={item.label}
-              selected={!!selected}
-              onClick={() => {
-                onNavigate(item.view);
-                onClose?.();
+              key={item.path}
+              component={NavLink}
+              to={item.path}
+              end={item.end}
+              onClick={onClose}
+              sx={{
+                color: "inherit",
+                textDecoration: "none",
+                "&.active": { bgcolor: "rgba(255,255,255,0.14)" },
               }}
             >
               <ListItemIcon sx={{ color: "inherit", minWidth: 40 }}>
@@ -83,7 +72,7 @@ function DrawerContent({
   );
 }
 
-export default function Sidebar({ mobileOpen, activeView, onNavigate, onClose }: SidebarProps) {
+export default function Sidebar({ mobileOpen, onClose }: SidebarProps) {
   return (
     <>
       <Drawer
@@ -103,7 +92,7 @@ export default function Sidebar({ mobileOpen, activeView, onNavigate, onClose }:
           },
         }}
       >
-        <DrawerContent activeView={activeView} onNavigate={onNavigate} onClose={onClose} />
+        <DrawerContent onClose={onClose} />
       </Drawer>
 
       <Drawer
@@ -121,7 +110,7 @@ export default function Sidebar({ mobileOpen, activeView, onNavigate, onClose }:
           },
         }}
       >
-        <DrawerContent activeView={activeView} onNavigate={onNavigate} />
+        <DrawerContent />
       </Drawer>
     </>
   );

@@ -1,5 +1,7 @@
 export type FilterType = "all" | "active" | "completed";
 
+export type RequestStatus = "idle" | "loading" | "success" | "error";
+
 export interface Todo {
   id: string;
   title: string;
@@ -8,7 +10,8 @@ export interface Todo {
 }
 
 export type TodoAction =
-  | { type: "ADD"; payload: string }
-  | { type: "TOGGLE"; payload: string }
+  | { type: "SET_TODOS"; payload: Todo[] }
+  | { type: "ADD"; payload: Todo }
+  | { type: "TOGGLE"; payload: Todo }
   | { type: "DELETE"; payload: string }
   | { type: "EDIT"; payload: { id: string; title: string } };

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "seed-1",
+    "title": "Przygotować prezentację projektu",
+    "completed": false,
+    "createdAt": "2026-05-01T09:00:00.000Z"
+  },
+  {
+    "id": "seed-2",
+    "title": "Przejrzeć wymagania WCAG",
+    "completed": true,
+    "createdAt": "2026-05-02T14:30:00.000Z"
+  },
+  {
+    "id": "seed-3",
+    "title": "Przetestować aplikację na mobile",
+    "completed": false,
+    "createdAt": "2026-05-03T11:15:00.000Z"
+  }
+]
