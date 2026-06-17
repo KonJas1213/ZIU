@@ -33,7 +33,7 @@ export default function TodoListTailwind({ todos, onToggle, onDelete }: TodoList
           <button
             type="button"
             onClick={() => onDelete(todo.id)}
-            aria-label="Usuń zadanie"
+            aria-label={`Usuń zadanie: ${todo.title}`}
             className="text-sm font-medium text-danger hover:underline"
           >
             Usuń

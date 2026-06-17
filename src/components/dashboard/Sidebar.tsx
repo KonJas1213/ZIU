@@ -67,7 +67,7 @@ function DrawerContent({
               }}
             >
               <ListItemIcon sx={{ color: "inherit", minWidth: 40 }}>
-                <Icon />
+                <Icon aria-hidden="true" />
               </ListItemIcon>
               <ListItemText primary={item.label} />
             </ListItemButton>
@@ -90,6 +90,7 @@ export default function Sidebar({ mobileOpen, activeView, onNavigate, onClose }:
         variant="temporary"
         open={mobileOpen}
         onClose={onClose}
+        id="main-navigation"
         className={`no-print${mobileOpen ? " nav__menu--open" : ""}`}
         ModalProps={{ keepMounted: true }}
         sx={{

@@ -19,7 +19,7 @@ export default function StatsGrid() {
   }, [state.todos]);
 
   return (
-    <div className="task-grid">
+    <section className="task-grid" aria-label="Statystyki zadań">
       <StatsCard
         title="Wszystkie zadania"
         value={total}
@@ -41,6 +41,6 @@ export default function StatsGrid() {
         color="#E65100"
         bgColor="#FFF3E0"
       />
-    </div>
+    </section>
   );
 }

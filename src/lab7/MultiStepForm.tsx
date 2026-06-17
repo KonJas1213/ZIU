@@ -55,15 +55,15 @@ export default function MultiStepForm() {
 
   if (successMessage) {
     return (
-      <div className="lab7-wrapper" role="status">
+      <article className="lab7-wrapper" role="status">
         <h2>{successMessage}</h2>
         <p>Możesz wrócić do listy zadań.</p>
-      </div>
+      </article>
     );
   }
 
   return (
-    <main className="lab7-wrapper" aria-label="Formularz rejestracji">
+    <article className="lab7-wrapper" aria-labelledby="registration-form-title">
       <nav aria-label="Postęp rejestracji">
         <ol className="lab7-breadcrumb">
           <li aria-current={currentStep === 1 ? "step" : undefined}>1. Dane</li>
@@ -72,7 +72,7 @@ export default function MultiStepForm() {
         </ol>
       </nav>
 
-      <h2 tabIndex={-1} ref={headingRef}>
+      <h2 id="registration-form-title" tabIndex={-1} ref={headingRef}>
         {stepTitle[currentStep]}
       </h2>
 
@@ -99,6 +99,6 @@ export default function MultiStepForm() {
           onSubmit={handleFinalSubmit}
         />
       )}
-    </main>
+    </article>
   );
 }
