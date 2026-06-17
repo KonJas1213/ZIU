@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>TodoApp – ćwiczenie Lab 6 (błędy)</title>
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  background: #f2f4f8;
+  overflow: hidden;
+}
+h1 { font-size: 20px; }
+h2 { font-size: 16px; }
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #0043ff;
+  padding: 12px 24px;
+}
+.nav__logo { color: #fff; font-weight: bold; font-size: 18px; }
+.nav__links {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.nav__links a { color: #fff; text-decoration: none; white-space: nowrap; }
+.btn-icon {
+  width: 24px;
+  height: 24px;
+  background: #f8b914;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.container { max-width: 960px; margin: 0 auto; padding: 24px 16px; }
+.task-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 24px;
+}
+.task-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,.08);
+}
+.task-card__title { font-weight: bold; margin: 0 0 8px; }
+.task-card__meta { font-size: 11px; color: #888; }
+.task-card__actions { display: flex; gap: 6px; margin-top: 12px; }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav__logo">TodoApp</div>
+  <ul class="nav__links">
+    <li><a href="#">Zadania</a></li>
+    <li><a href="#">Kategorie</a></li>
+    <li><a href="#">Ustawienia</a></li>
+    <li><a href="#">Profil</a></li>
+  </ul>
+</nav>
+<div class="container">
+  <h1>Moje zadania</h1>
+  <h2>Na dziś</h2>
+  <div class="task-grid">
+    <div class="task-card">
+      <p class="task-card__title">Zaprojektować onboarding</p>
+      <p class="task-card__meta">Termin: 12.04.2026 · Priorytet: wysoki</p>
+      <div class="task-card__actions">
+        <button class="btn-icon" title="Edytuj">✏️</button>
+        <button class="btn-icon" title="Usuń">🗑️</button>
+        <button class="btn-icon" title="Ukończ">✔️</button>
+      </div>
+    </div>
+    <div class="task-card">
+      <p class="task-card__title">Code review – komponent Nav</p>
+      <p class="task-card__meta">Termin: 13.04.2026 · Priorytet: średni</p>
+      <div class="task-card__actions">
+        <button class="btn-icon" title="Edytuj">✏️</button>
+        <button class="btn-icon" title="Usuń">🗑️</button>
+        <button class="btn-icon" title="Ukończ">✔️</button>
+      </div>
+    </div>
+    <div class="task-card">
+      <p class="task-card__title">Napisać testy jednostkowe</p>
+      <p class="task-card__meta">Termin: 15.04.2026 · Priorytet: niski</p>
+      <div class="task-card__actions">
+        <button class="btn-icon" title="Edytuj">✏️</button>
+        <button class="btn-icon" title="Usuń">🗑️</button>
+        <button class="btn-icon" title="Ukończ">✔️</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

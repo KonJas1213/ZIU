@@ -22,21 +22,14 @@ const navItems = [
   { label: "Ustawienia", icon: SettingsIcon },
 ];
 
-export default function Sidebar() {
+interface SidebarProps {
+  mobileOpen: boolean;
+  onClose: () => void;
+}
+
+function DrawerContent({ onNavigate }: { onNavigate?: () => void }) {
   return (
-    <Drawer
-      variant="permanent"
-      sx={{
-        width: DRAWER_WIDTH,
-        flexShrink: 0,
-        "& .MuiDrawer-paper": {
-          width: DRAWER_WIDTH,
-          boxSizing: "border-box",
-          bgcolor: "primary.main",
-          color: "white",
-        },
-      }}
-    >
+    <>
       <Toolbar>
         <Typography variant="h6" fontWeight={700}>
           TodoApp
@@ -47,7 +40,7 @@ export default function Sidebar() {
         {navItems.map((item) => {
           const Icon = item.icon;
           return (
-            <ListItemButton key={item.label}>
+            <ListItemButton key={item.label} onClick={onNavigate}>
               <ListItemIcon sx={{ color: "inherit", minWidth: 40 }}>
                 <Icon />
               </ListItemIcon>
@@ -61,6 +54,49 @@ export default function Sidebar() {
         <Avatar sx={{ width: 36, height: 36, bgcolor: "primary.dark" }}>U</Avatar>
         <Typography variant="body2">Użytkownik</Typography>
       </Box>
-    </Drawer>
+    </>
+  );
+}
+
+export default function Sidebar({ mobileOpen, onClose }: SidebarProps) {
+  return (
+    <>
+      <Drawer
+        variant="temporary"
+        open={mobileOpen}
+        onClose={onClose}
+        className={`no-print${mobileOpen ? " nav__menu--open" : ""}`}
+        ModalProps={{ keepMounted: true }}
+        sx={{
+          display: { xs: "block", lg: "none" },
+          "& .MuiDrawer-paper": {
+            width: DRAWER_WIDTH,
+            boxSizing: "border-box",
+            bgcolor: "primary.main",
+            color: "white",
+          },
+        }}
+      >
+        <DrawerContent onNavigate={onClose} />
+      </Drawer>
+
+      <Drawer
+        variant="permanent"
+        className="no-print"
+        sx={{
+          display: { xs: "none", lg: "block" },
+          width: DRAWER_WIDTH,
+          flexShrink: 0,
+          "& .MuiDrawer-paper": {
+            width: DRAWER_WIDTH,
+            boxSizing: "border-box",
+            bgcolor: "primary.main",
+            color: "white",
+          },
+        }}
+      >
+        <DrawerContent />
+      </Drawer>
+    </>
   );
 }

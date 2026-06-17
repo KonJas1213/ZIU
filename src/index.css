@@ -1,3 +1,155 @@
 ﻿@tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --font-h1: clamp(1.5rem, 4vw, 2.5rem);
+  --font-h2: clamp(1.25rem, 3vw, 2rem);
+  --font-body: clamp(0.875rem, 1.1vw, 1.125rem);
+  --font-small: clamp(0.75rem, 0.85vw, 0.95rem);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-size: var(--font-body);
+  overflow-x: hidden;
+}
+
+h1 {
+  font-size: var(--font-h1);
+}
+
+h2 {
+  font-size: var(--font-h2);
+}
+
+.dashboard-content {
+  width: 100%;
+  max-width: 1100px;
+  margin-inline: auto;
+}
+
+.task-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+}
+
+@media (min-width: 768px) {
+  .task-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .task-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.task-grid--auto-fit {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.task-card {
+  container-type: inline-size;
+  height: 100%;
+}
+
+.task-card__thumbnail {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+  border-radius: 8px 8px 0 0;
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+}
+
+@container (min-width: 400px) {
+  .task-card__thumbnail {
+    aspect-ratio: 21 / 9;
+  }
+}
+
+.task-card__meta {
+  font-size: var(--font-small);
+  color: #64748b;
+}
+
+.task-list-container {
+  margin-top: clamp(1rem, 2vw, 2rem);
+}
+
+.nav__hamburger {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.nav__hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 1px;
+}
+
+@media (min-width: 1024px) {
+  .nav__hamburger {
+    display: none;
+  }
+}
+
+body.nav__menu--open,
+body:has(.nav__menu--open) {
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media print {
+  .no-print,
+  .MuiDrawer-root,
+  .nav__hamburger {
+    display: none !important;
+  }
+
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 12pt;
+    overflow: visible !important;
+  }
+
+  .task-card,
+  .task-list-container {
+    break-inside: avoid;
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+  }
+
+  .task-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
