@@ -1,6 +1,6 @@
 import DashboardIcon from "@mui/icons-material/Dashboard";
+import HowToRegIcon from "@mui/icons-material/HowToReg";
 import TaskIcon from "@mui/icons-material/Task";
-import SettingsIcon from "@mui/icons-material/Settings";
 import {
   Avatar,
   Box,
@@ -13,21 +13,32 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
+import { AppView } from "../../types/app.types";
 
 export const DRAWER_WIDTH = 240;
 
-const navItems = [
-  { label: "Dashboard", icon: DashboardIcon },
-  { label: "Zadania", icon: TaskIcon },
-  { label: "Ustawienia", icon: SettingsIcon },
+const navItems: { label: string; view: AppView; icon: typeof DashboardIcon }[] = [
+  { label: "Dashboard", view: "dashboard", icon: DashboardIcon },
+  { label: "Zadania", view: "dashboard", icon: TaskIcon },
+  { label: "Rejestracja", view: "register", icon: HowToRegIcon },
 ];
 
 interface SidebarProps {
   mobileOpen: boolean;
+  activeView: AppView;
+  onNavigate: (view: AppView) => void;
   onClose: () => void;
 }
 
-function DrawerContent({ onNavigate }: { onNavigate?: () => void }) {
+function DrawerContent({
+  activeView,
+  onNavigate,
+  onClose,
+}: {
+  activeView: AppView;
+  onNavigate: (view: AppView) => void;
+  onClose?: () => void;
+}) {
   return (
     <>
       <Toolbar>
@@ -39,8 +50,22 @@ function DrawerContent({ onNavigate }: { onNavigate?: () => void }) {
       <List component="nav" aria-label="Główna nawigacja">
         {navItems.map((item) => {
           const Icon = item.icon;
+          const selected =
+            item.label === "Rejestracja"
+              ? activeView === "register"
+              : activeView === "dashboard" && item.label === "Dashboard"
+                ? true
+                : activeView === "dashboard" && item.label === "Zadania";
+
           return (
-            <ListItemButton key={item.label} onClick={onNavigate}>
+            <ListItemButton
+              key={item.label}
+              selected={!!selected}
+              onClick={() => {
+                onNavigate(item.view);
+                onClose?.();
+              }}
+            >
               <ListItemIcon sx={{ color: "inherit", minWidth: 40 }}>
                 <Icon />
               </ListItemIcon>
@@ -58,7 +83,7 @@ function DrawerContent({ onNavigate }: { onNavigate?: () => void }) {
   );
 }
 
-export default function Sidebar({ mobileOpen, onClose }: SidebarProps) {
+export default function Sidebar({ mobileOpen, activeView, onNavigate, onClose }: SidebarProps) {
   return (
     <>
       <Drawer
@@ -77,7 +102,7 @@ export default function Sidebar({ mobileOpen, onClose }: SidebarProps) {
           },
         }}
       >
-        <DrawerContent onNavigate={onClose} />
+        <DrawerContent activeView={activeView} onNavigate={onNavigate} onClose={onClose} />
       </Drawer>
 
       <Drawer
@@ -95,7 +120,7 @@ export default function Sidebar({ mobileOpen, onClose }: SidebarProps) {
           },
         }}
       >
-        <DrawerContent />
+        <DrawerContent activeView={activeView} onNavigate={onNavigate} />
       </Drawer>
     </>
   );

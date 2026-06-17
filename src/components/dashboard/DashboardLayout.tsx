@@ -3,12 +3,15 @@ import { Box, Toolbar } from "@mui/material";
 import Sidebar from "./Sidebar";
 import AppHeader from "./AppHeader";
 import StatsGrid from "./StatsGrid";
+import { AppView, viewTitles } from "../../types/app.types";
 
 interface DashboardLayoutProps {
   children?: ReactNode;
+  activeView: AppView;
+  onNavigate: (view: AppView) => void;
 }
 
-export default function DashboardLayout({ children }: DashboardLayoutProps) {
+export default function DashboardLayout({ children, activeView, onNavigate }: DashboardLayoutProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
@@ -16,9 +19,19 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     return () => document.body.classList.remove("nav__menu--open");
   }, [mobileOpen]);
 
+  const handleNavigate = (view: AppView) => {
+    onNavigate(view);
+    setMobileOpen(false);
+  };
+
   return (
     <Box sx={{ display: "flex", minHeight: "100vh" }}>
-      <Sidebar mobileOpen={mobileOpen} onClose={() => setMobileOpen(false)} />
+      <Sidebar
+        mobileOpen={mobileOpen}
+        activeView={activeView}
+        onNavigate={handleNavigate}
+        onClose={() => setMobileOpen(false)}
+      />
       <Box
         component="main"
         id="main-content"
@@ -31,11 +44,12 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       >
         <Box className="dashboard-content">
           <AppHeader
+            title={viewTitles[activeView]}
             menuOpen={mobileOpen}
             onMenuToggle={() => setMobileOpen((prev) => !prev)}
           />
           <Toolbar />
-          <StatsGrid />
+          {activeView === "dashboard" && <StatsGrid />}
           <Box className="task-list-container">{children}</Box>
         </Box>
       </Box>

@@ -4,9 +4,11 @@ import DashboardLayout from "./components/dashboard/DashboardLayout";
 import { FilterBar } from "./components/FilterBar";
 import TodoInputTailwind from "./components/TodoInput.tailwind";
 import TodoListTailwind from "./components/TodoList.tailwind";
+import MultiStepForm from "./lab7/MultiStepForm";
+import { AppView } from "./types/app.types";
 import { FilterType } from "./types/todo.types";
 
-function AppContent() {
+function TodosPanel() {
   const { todos, dispatch } = useTodos();
   const [filter, setFilter] = useState<FilterType>("all");
 
@@ -17,16 +19,24 @@ function AppContent() {
   }, [todos, filter]);
 
   return (
-    <DashboardLayout>
-      <div className="rounded-2xl border border-gray-200 bg-white p-4">
-        <TodoInputTailwind onAdd={(text) => dispatch({ type: "ADD", payload: text })} />
-        <FilterBar activeFilter={filter} onFilterChange={setFilter} />
-        <TodoListTailwind
-          todos={filteredTodos}
-          onToggle={(id) => dispatch({ type: "TOGGLE", payload: id })}
-          onDelete={(id) => dispatch({ type: "DELETE", payload: id })}
-        />
-      </div>
+    <div className="rounded-2xl border border-gray-200 bg-white p-4">
+      <TodoInputTailwind onAdd={(text) => dispatch({ type: "ADD", payload: text })} />
+      <FilterBar activeFilter={filter} onFilterChange={setFilter} />
+      <TodoListTailwind
+        todos={filteredTodos}
+        onToggle={(id) => dispatch({ type: "TOGGLE", payload: id })}
+        onDelete={(id) => dispatch({ type: "DELETE", payload: id })}
+      />
+    </div>
+  );
+}
+
+function AppContent() {
+  const [view, setView] = useState<AppView>("dashboard");
+
+  return (
+    <DashboardLayout activeView={view} onNavigate={setView}>
+      {view === "dashboard" ? <TodosPanel /> : <MultiStepForm />}
     </DashboardLayout>
   );
 }

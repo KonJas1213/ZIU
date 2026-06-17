@@ -1,15 +1,16 @@
-import { useState } from "react";
+import { IconButton, Stack, Toolbar, Typography } from "@mui/material";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
-import { IconButton, Stack, Toolbar, Typography } from "@mui/material";
+import { useState } from "react";
 
 interface AppHeaderProps {
-  onMenuToggle: () => void;
+  title: string;
   menuOpen: boolean;
+  onMenuToggle: () => void;
 }
 
-export default function AppHeader({ onMenuToggle, menuOpen }: AppHeaderProps) {
+export default function AppHeader({ title, menuOpen, onMenuToggle }: AppHeaderProps) {
   const [darkMode, setDarkMode] = useState(false);
 
   return (
@@ -42,7 +43,7 @@ export default function AppHeader({ onMenuToggle, menuOpen }: AppHeaderProps) {
             m: 0,
           }}
         >
-          Dashboard
+          {title}
         </Typography>
       </Stack>
       <Stack direction="row" spacing={1} className="no-print">
@@ -54,11 +55,7 @@ export default function AppHeader({ onMenuToggle, menuOpen }: AppHeaderProps) {
         >
           {darkMode ? <LightModeIcon /> : <DarkModeIcon />}
         </IconButton>
-        <IconButton
-          color="default"
-          aria-label="Powiadomienia"
-          sx={{ minWidth: 44, minHeight: 44 }}
-        >
+        <IconButton color="default" aria-label="Powiadomienia" sx={{ minWidth: 44, minHeight: 44 }}>
           <NotificationsNoneIcon />
         </IconButton>
       </Stack>
